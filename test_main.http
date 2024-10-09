@@ -1,0 +1,16 @@
+# Test your FastAPI endpoints
+
+GET http://127.0.0.1:8000/live-feature
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/results/average/
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8000/results/average/2024-06-01T12:00:00/2024-06-01T13:00:00
+Accept: application/json
+
+###
