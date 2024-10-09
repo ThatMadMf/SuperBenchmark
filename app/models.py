@@ -4,7 +4,7 @@ from app.database import Base
 
 
 class BenchmarkResult(Base):  # type: ignore
-    __tablename__ = 'benchmark_results'
+    __tablename__ = "benchmark_results"
 
     id = Column(Integer, primary_key=True)
     request_id = Column(String, index=True)

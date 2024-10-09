@@ -16,25 +16,31 @@ test_database_file = "test_database.json"
 
 
 def try_load_test_data(db: Session) -> None:
-    debug_mode = os.getenv("SUPERBENCHMARK_DEBUG", "False").lower() in ["true", "t", "1"]
+    debug_mode = os.getenv("SUPERBENCHMARK_DEBUG", "False").lower() in {"true", "t", "1"}
 
     if not debug_mode:
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="The feature is not live yet")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="The feature is not live yet",
+        )
 
-    with open(test_database_file, 'r') as fixture_file:
-        fixture_data = json.load(fixture_file)['benchmarking_results']
+    with open(test_database_file, "r", encoding="utf8") as fixture_file:
+        fixture_data = json.load(fixture_file)["benchmarking_results"]
 
         for benchmark_data in fixture_data:
-            timestamp = datetime.datetime.strptime(benchmark_data['timestamp'], '%Y-%m-%dT%H:%M:%S')
+            timestamp = datetime.datetime.strptime(
+                benchmark_data["timestamp"],
+                "%Y-%m-%dT%H:%M:%S",
+            )
 
             record = BenchmarkResult(
-                request_id=benchmark_data['request_id'],
-                prompt_text=benchmark_data['prompt_text'],
-                generated_text=benchmark_data['generated_text'],
-                token_count=benchmark_data['token_count'],
-                time_to_first_token=benchmark_data['time_to_first_token'],
-                time_per_output_token=benchmark_data['time_per_output_token'],
-                total_generation_time=benchmark_data['total_generation_time'],
+                request_id=benchmark_data["request_id"],
+                prompt_text=benchmark_data["prompt_text"],
+                generated_text=benchmark_data["generated_text"],
+                token_count=benchmark_data["token_count"],
+                time_to_first_token=benchmark_data["time_to_first_token"],
+                time_per_output_token=benchmark_data["time_per_output_token"],
+                total_generation_time=benchmark_data["total_generation_time"],
                 timestamp=timestamp,
             )
 

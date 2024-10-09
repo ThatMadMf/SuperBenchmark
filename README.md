@@ -8,7 +8,11 @@
 ### Run server
 `poetry run uvicorn app.main:app --reload`
 ### Run tests
-`pytest`
+`poetry run pytest`
 
-## Code style and linting tools:
+## Code formatting tools:
 Formatting config is provided in editorconfig file
+## Type checking
+Type checking is performed with mypy: `poetry run mypy`
+## Linter
+Linting is performed with pylint: ` poetry run pylint app/`

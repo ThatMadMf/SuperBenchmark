@@ -32,7 +32,9 @@ def test_get_average__not_available() -> None:
 def test_get_average_range__success() -> None:
     os.environ["SUPERBENCHMARK_DEBUG"] = "True"
 
-    response = client.get("/results/average/2024-06-01T12:00:00/2024-06-01T13:00:00")
+    url = "/results/average/2024-06-01T12:00:00/2024-06-01T13:00:00"
+
+    response = client.get(url)
 
     assert response.status_code == 200
     assert response.json() == {
@@ -48,7 +50,9 @@ def test_get_average_range__success() -> None:
 def test_get_average_range__no_content() -> None:
     os.environ["SUPERBENCHMARK_DEBUG"] = "True"
 
-    response = client.get("/results/average/2024-06-01T10:00:00/2024-06-01T11:00:00")
+    url = "/results/average/2024-06-01T10:00:00/2024-06-01T11:00:00"
+
+    response = client.get(url)
 
     assert response.status_code == 204
 
@@ -56,6 +60,7 @@ def test_get_average_range__no_content() -> None:
 
 
 def test_get_average_range__not_available() -> None:
-    response = client.get("/results/average/2024-06-01T12:00:00/2024-06-01T13:00:00")
+    url = "/results/average/2024-06-01T12:00:00/2024-06-01T13:00:00"
+    response = client.get(url)
 
     assert response.status_code == 503
