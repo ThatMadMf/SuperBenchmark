@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+from typing import Dict
 
 from fastapi import APIRouter, Response, status, HTTPException, Depends
 from sqlalchemy import func, and_
@@ -14,7 +15,7 @@ router = APIRouter()
 test_database_file = "test_database.json"
 
 
-def try_load_test_data(db: Session):
+def try_load_test_data(db: Session) -> None:
     debug_mode = os.getenv("SUPERBENCHMARK_DEBUG", "False").lower() in ["true", "t", "1"]
 
     if not debug_mode:
@@ -42,8 +43,8 @@ def try_load_test_data(db: Session):
         db.commit()
 
 
-@router.get("/")
-async def get_average(db: Session = Depends(get_db)):
+@router.get("/", response_model=None)
+async def get_average(db: Session = Depends(get_db)) -> Dict[str, float]:
     try_load_test_data(db)
 
     averages = db.query(
@@ -63,8 +64,12 @@ async def get_average(db: Session = Depends(get_db)):
     return averages_dict
 
 
-@router.get("/{start_time}/{end_time}")
-async def get_average_range(start_time: datetime.datetime, end_time: datetime.datetime, db: Session = Depends(get_db)):
+@router.get("/{start_time}/{end_time}", response_model=None)
+async def get_average_range(
+        start_time: datetime.datetime,
+        end_time: datetime.datetime,
+        db: Session = Depends(get_db),
+) -> Dict[str, float] | Response:
     try_load_test_data(db)
 
     benchmarks_in_range = db.query(BenchmarkResult).filter(

@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String, DateTime
 
-from .database import Base
+from app.database import Base
 
 
-class BenchmarkResult(Base):
+class BenchmarkResult(Base):  # type: ignore
     __tablename__ = 'benchmark_results'
 
     id = Column(Integer, primary_key=True)

@@ -7,7 +7,7 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_get_average__success():
+def test_get_average__success() -> None:
     os.environ["SUPERBENCHMARK_DEBUG"] = "True"
 
     response = client.get("/results/average/")
@@ -23,13 +23,13 @@ def test_get_average__success():
     del os.environ["SUPERBENCHMARK_DEBUG"]
 
 
-def test_get_average__not_available():
+def test_get_average__not_available() -> None:
     response = client.get("/results/average/")
 
     assert response.status_code == 503
 
 
-def test_get_average_range__success():
+def test_get_average_range__success() -> None:
     os.environ["SUPERBENCHMARK_DEBUG"] = "True"
 
     response = client.get("/results/average/2024-06-01T12:00:00/2024-06-01T13:00:00")
@@ -45,7 +45,7 @@ def test_get_average_range__success():
     del os.environ["SUPERBENCHMARK_DEBUG"]
 
 
-def test_get_average_range__no_content():
+def test_get_average_range__no_content() -> None:
     os.environ["SUPERBENCHMARK_DEBUG"] = "True"
 
     response = client.get("/results/average/2024-06-01T10:00:00/2024-06-01T11:00:00")
@@ -55,7 +55,7 @@ def test_get_average_range__no_content():
     del os.environ["SUPERBENCHMARK_DEBUG"]
 
 
-def test_get_average_range__not_available():
+def test_get_average_range__not_available() -> None:
     response = client.get("/results/average/2024-06-01T12:00:00/2024-06-01T13:00:00")
 
     assert response.status_code == 503
